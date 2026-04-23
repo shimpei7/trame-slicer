@@ -1,4 +1,5 @@
 from .control_button import ControlButton
+from .export_button import ExportButton
 from .dynamic_select import DynamicSelect, DynamicSelectState
 from .enum_to_title import enum_to_radio_buttons, enum_to_title
 from .flex_container import FlexContainer
@@ -48,6 +49,7 @@ from .volume_property_ui import Preset, VolumePropertyState, VolumePropertyUI
 
 __all__ = [
     "BrushParametersState",
+    "ExportButton",
     "BrushParametersUI",
     "ControlButton",
     "DrawEffectState",

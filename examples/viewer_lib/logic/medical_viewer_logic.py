@@ -5,6 +5,7 @@ from trame_slicer.rca_view import register_rca_factories
 
 from ..ui import MedicalViewerUI, SegmentEditorUI, ViewerLayoutState, VolumePropertyUI
 from .base_logic import BaseLogic
+from .export_button_logic import ExportButtonLogic
 from .layout_button_logic import LayoutButtonLogic
 from .load_volume_logic import LoadVolumeLogic
 from .markups_button_logic import MarkupsButtonLogic
@@ -29,6 +30,7 @@ class MedicalViewerLogic(BaseLogic[ViewerLayoutState]):
         self._load_files_logic = LoadVolumeLogic(server, slicer_app)
         self._slab_logic = SlabLogic(server, slicer_app)
         self._mpr_logic = MprInteractionButtonLogic(server, slicer_app)
+        self._export_logic = ExportButtonLogic(server, slicer_app)
 
         # Connect signals
         self._load_files_logic.volume_loaded.connect(self._on_volume_changed)
@@ -44,6 +46,10 @@ class MedicalViewerLogic(BaseLogic[ViewerLayoutState]):
     @property
     def layout_manager(self) -> LayoutManager:
         return self._layout_button_logic.layout_manager
+
+    @property
+    def export_trigger_name(self) -> str:
+        return self._export_logic.trigger_name
 
     def set_ui(self, ui: MedicalViewerUI):
         self._segment_editor_logic.set_ui(ui.tool_registry[SegmentEditorUI])

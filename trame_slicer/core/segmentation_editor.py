@@ -406,8 +406,21 @@ class SegmentationEditor(SignalContainer):
         segmentation_node: vtkMRMLSegmentationNode,
         out_folder: str,
         segment_ids: list[str] | None = None,
+        merge: bool = False,
     ) -> None:
-        self._logic.ExportSegmentsClosedSurfaceRepresentationToFiles(out_folder, segmentation_node, segment_ids)
+        self._logic.ExportSegmentsClosedSurfaceRepresentationToFiles(
+            out_folder, segmentation_node, segment_ids, "STL", True, 1.0, merge
+        )
+
+    def export_segmentation_to_obj(
+        self,
+        segmentation_node: vtkMRMLSegmentationNode,
+        out_folder: str,
+        segment_ids: list[str] | None = None,
+    ) -> None:
+        self._logic.ExportSegmentsClosedSurfaceRepresentationToFiles(
+            out_folder, segmentation_node, segment_ids, "OBJ"
+        )
 
     def load_segmentation_from_file(self, segmentation_file: str) -> vtkMRMLSegmentationNode | None:
         segmentation_file = Path(segmentation_file).resolve()

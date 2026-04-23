@@ -4,6 +4,7 @@ from trame_server import Server
 from trame_slicer.core import LayoutManager
 
 from .control_button import ControlButton
+from .export_button import ExportButton
 from .flex_container import FlexContainer
 from .layout_button import LayoutButton
 from .load_volume_ui import LoadVolumeUI
@@ -19,12 +20,14 @@ from .volume_property_ui import VolumePropertyUI
 
 
 class MedicalViewerUI:
-    def __init__(self, server: Server, layout_manager: LayoutManager):
+    def __init__(self, server: Server, layout_manager: LayoutManager, export_trigger_name: str | None = None):
         self.tool_registry = {}
         with ViewerLayout(server) as self.layout:
             self.layout.title.set_text("Medical Viewer")
             with self.layout.appbar, Template(v_slot_prepend=True):
                 self.load_volume_items_buttons = LoadVolumeUI()
+                if export_trigger_name:
+                    self.export_button = ExportButton(trigger_name=export_trigger_name)
 
             with self.layout.drawer:
                 self._register_tool_ui(SegmentEditorUI)
